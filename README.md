@@ -1,8 +1,9 @@
 ## Set Up Of The Applicatiton.
 
 First clone this application in your local machine.
+git clone https://github.com/abhip75/frontend-test-fotoowl.git
 
-then inside that run nmp install and after installing run npm start.
+then inside that run npm install and after installing run npm start.
 
 # Chat Application Documentation
 
