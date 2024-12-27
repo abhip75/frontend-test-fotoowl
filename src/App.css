@@ -1,0 +1,189 @@
+/* Main Container */
+.container {
+  display: flex;
+  height: 100vh;
+  transition: all 0.3s ease;
+  flex-direction: row; /* Default: horizontal layout */
+  box-sizing: border-box;
+}
+
+/* Contact List */
+.contact-list {
+  width: 30%;
+  border-right: 1px solid #ccc;
+  padding: 15px;
+  background-color: #fff;
+  transition: width 0.3s ease-in-out;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-list .contact {
+  padding: 10px;
+  border-radius: 5px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.contact-list .contact:hover {
+  background-color: #f0f0f0; /* Light background on hover */
+}
+
+/* Chat Window */
+
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Message Styles */
+.message {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 10px;
+  max-width: 70%;
+  transition: all 0.3s ease;
+}
+
+.message.sent {
+  text-align: right;
+  background-color: #dcf8c6;
+  margin-left: auto;
+}
+
+.message.received {
+  text-align: left;
+  background-color: #ffffff;
+  margin-right: auto;
+}
+
+/* Message Input */
+.message-input {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f0f0f0;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  margin-top: 10px;
+}
+
+/* Input field */
+.message-input input {
+  padding: 12px; /* Increase padding for larger input */
+  margin-right: 10px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  width: calc(100% - 120px); /* Adjust the width based on the button size */
+  box-sizing: border-box;
+}
+
+.message-input input:focus {
+  border-color: #25d366; /* WhatsApp green */
+}
+
+/* Button */
+.message-input button {
+  padding: 12px 23px;
+  background-color: #25d366; /* WhatsApp green */
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px; /* Space between input and button */
+}
+
+.message-input button:hover {
+  background-color: #128c7e; /* Darker green on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stacks the chat and contact list vertically */
+  }
+
+  .contact-list {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  .chat-window {
+    width: 100%;
+  }
+
+  /* Message input styles for smaller screens */
+  .message-input input {
+    font-size: 16px;
+    width: calc(100% - 100px); /* Adjust input width for smaller screens */
+  }
+
+  .message-input button {
+    font-size: 18px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .message-input input {
+    font-size: 14px;
+    width: calc(89% - 70px); /* Adjust input width for very small screens */
+  }
+
+  .message-input button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  /* Adjust contact list and chat window layout for small screens */
+  .contact-list {
+    width: 100%;
+    border-right: none;
+    margin-bottom: 10px;
+  }
+
+  .chat-window {
+    width: 100%;
+  }
+}
+
+/* For 320px screen */
+@media (max-width: 320px) {
+  .contact-list {
+    width: 100%;
+    padding: 5px;
+  }
+
+  .message-input input {
+    font-size: 14px;
+    width: calc(89% - 60px); /* Adjust input width for 320px screens */
+  }
+
+  .message-input button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
