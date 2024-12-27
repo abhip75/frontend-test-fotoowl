@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+## Set Up Of The Applicatiton.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+First clone this application in your local machine.
 
-## Available Scripts
+then inside that run nmp install and after installing run npm start.
 
-In the project directory, you can run:
+# Chat Application Documentation
 
-### `npm start`
+## Design Choices
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Component-based Architecture
+The application follows a component-based architecture where each distinct functionality is divided into smaller, reusable components. This allows us to build an organized and maintainable codebase. The key components include:
+- **ChatWindow**: Handles the display of the chat window for the selected contact.
+- **MessageInput**: Provides an input field for the user to type and send messages.
+- **ContactList**: Displays a list of contacts that the user can interact with.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### State Management
+State management in the application is handled using **React's Context API** combined with **useReducer**. 
+- **Context API** is used to provide a global state accessible across the components. 
+- **useReducer** is used for managing the state of contacts, messages, and selected contact in a more predictable and scalable way, especially for actions that may result in complex state updates.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Challenges Faced During Development
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Managing Multiple Chat Windows**  
+   The main challenge was managing multiple chat windows for different contacts. Initially, when a user selected a contact, all messages were being sent to the same chat window. To solve this, we ensured that each contact’s messages are stored in a unique array under the `messages` object, with the key being the contact’s ID. This way, each contact has its own separate chat window, and messages are fetched and sent accordingly.
 
-### `npm run eject`
+2. **Data Persistence**  
+   Another challenge was maintaining data persistence, especially when the user is offline. To handle this, we integrated **IndexedDB** for storing unsent messages while the user is offline. When the user comes online, the saved messages are automatically synced with the main database (InstantDB). This ensures that the app works seamlessly, even with network disruptions, and the user can continue their conversations without losing any messages.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Usage of Hooks, Context, Custom Hooks, useReducer, InstantDB, and IndexedDB
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### React Hooks
+- **useState**: Used for managing local component state, such as the `text` in the message input field. This allows the component to keep track of the input value as the user types their message.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Context API
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- The Context API is used to share global state across the components without having to pass props down manually. This simplifies state management and provides a clean structure for the application.
+- **Example** : const { state, dispatch } = useContext(AppContext);
 
-## Learn More
+### useReducer
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- The useReducer hook is used to handle more complex state changes, especially for managing actions that modify multiple pieces of state simultaneously, such as setting contacts or messages. This makes the state management more predictable and scalable.
+- **Example**: const [state, dispatch] = useReducer(appReducer, initialState);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### customHook
 
-### Code Splitting
+- Custom hooks, such as useMessagesDB and useInstantDB, abstract away the logic for interacting with IndexedDB and InstantDB. These custom hooks encapsulate the logic for saving and fetching messages, ensuring that components remain focused on rendering UI and handling user interactions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**useMessagesDB**: Provides methods to save and fetch messages from IndexedDB.
+**useInstantDB**: Provides methods to interact with InstantDB for real-time syncing of messages when the user is online.
 
-### Analyzing the Bundle Size
+### InstantDB and IndexedDB
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### InstantDB
+InstantDB is used as the primary database for storing messages when the user is online. It is used to sync messages in real-time across all devices when the user is connected to the internet. InstantDB ensures that all messages are sent and received without delay while the user is online.
 
-### Making a Progressive Web App
+**Example**: const { sendMessage, fetchMessages } = useInstantDB(dispatch);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### IndexedDB
+IndexedDB is used to store unsent messages when the user is offline. It provides a local storage mechanism that is more robust than traditional localStorage, allowing for larger data storage and indexing of data for quicker access. When the user comes back online, messages stored in IndexedDB are synced to the InstantDB database.
 
-### Advanced Configuration
+**Example**: const { saveMessage } = useMessagesDB(dispatch);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
